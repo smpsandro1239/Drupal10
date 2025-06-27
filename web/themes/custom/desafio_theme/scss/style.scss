@@ -1,0 +1,178 @@
+// Desafio Theme SCSS Main File
+
+// 1. Import Bootstrap functions and variables (Required for overrides)
+// Adjust the path according to your Bootstrap source files location.
+// This path assumes Bootstrap SASS files are in node_modules or a similar vendor directory.
+// If using the drupal/bootstrap5 theme, it might handle this differently,
+// or you might need to link to its SASS sources if you intend to recompile it fully.
+// For a subtheme, you often override variables and add custom CSS on top.
+
+// Option A: If Bootstrap SASS is available in node_modules (typical for frontend projects)
+// @import "../../../../node_modules/bootstrap/scss/functions"; // Path relative to this file
+// @import "variables"; // Your custom variable overrides
+// @import "../../../../node_modules/bootstrap/scss/variables"; // Bootstrap's default variables
+// @import "../../../../node_modules/bootstrap/scss/maps";
+// @import "../../../../node_modules/bootstrap/scss/mixins";
+// @import "../../../../node_modules/bootstrap/scss/utilities";
+
+
+// Option B: Simpler approach for Drupal subthemes - just import your variables,
+// and let the base theme (drupal/bootstrap5) load the main Bootstrap CSS.
+// Then, your custom rules here will add to or override the base theme's styles.
+// If `libraries-override` is used to disable base theme's Bootstrap CSS,
+// then you MUST compile Bootstrap fully here.
+
+// Assuming `drupal/bootstrap5` base theme handles loading Bootstrap core SASS/CSS.
+// We will just define our overrides and additional styles.
+// If you have disabled the base theme's Bootstrap CSS via `libraries-override`
+// then you need to import the full Bootstrap SASS here.
+
+// For now, let's assume we are *adding* styles and *overriding* via specificity,
+// or that the base theme provides a way to hook in these variable overrides.
+// The `bootstrap5` Drupal theme is designed to be subthemed. Check its documentation
+// for the recommended way to compile SASS. Often, you'd import your custom variables,
+// then the parts of Bootstrap you need, then your custom rules.
+
+// Let's try a common subtheming pattern:
+// Import local variables first. These will be used by your custom rules.
+@import "variables";
+
+// If you want to re-compile Bootstrap entirely (e.g., if base theme CSS is disabled):
+// This requires Bootstrap SASS sources to be available.
+// The path below is a placeholder. You'll need to point it to where
+// the Bootstrap SASS files are located in your Drupal installation
+// (e.g., in `web/libraries/bootstrap` or `vendor/twbs/bootstrap/scss`
+// or from the Bootstrap 5 base theme `web/themes/contrib/bootstrap5/scss`)
+
+// Example for full Bootstrap compilation:
+// @import "../../../../contrib/bootstrap5/scss/bootstrap"; // Adjust path as needed
+
+// Custom styles for Desafio Theme
+// These styles will be applied on top of or alongside Bootstrap.
+
+body {
+  font-family: sans-serif; // Basic font
+  color: $text-color;
+  padding-top: 56px; // If using a fixed Bootstrap navbar
+}
+
+// Greeting Block Style (from project plan)
+.greeting-block-content { // Changed from .greeting-block to be more specific
+  background: linear-gradient(45deg, $brand-primary, $custom-brand-purple);
+  color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+// Candidatura Form Styling (from project plan)
+// Add a wrapper class to your form via hook_form_alter or a Twig template if needed
+.candidatura-form {
+  .form-item {
+    margin-bottom: 1.5rem;
+  }
+
+  // Using Bootstrap's @extend for buttons.
+  // Ensure Bootstrap's SASS is imported if using @extend.
+  // If not compiling Bootstrap SASS directly, apply classes in HTML/Twig.
+  .form-submit {
+    // @extend .btn;
+    // @extend .btn-primary;
+    // @extend .btn-lg;
+    // If not extending, apply classes directly in Twig or form alter:
+    // e.g., $form['actions']['submit']['#attributes']['class'][] = 'btn btn-primary btn-lg';
+    // For SASS styling without @extend:
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    border-radius: 0.3rem;
+    color: #fff;
+    background-color: $primary;
+    border-color: $primary;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($primary, 10%);
+      border-color: darken($primary, 10%);
+    }
+  }
+}
+
+// CV Search Results Styling (from project plan)
+// These classes would typically be added in the Views UI or Views templates.
+.cv-search-results {
+  .views-row {
+    // @extend .card; // If Bootstrap SASS is compiled
+    // @extend .mb-3;
+    // Manual styling if not extending:
+    border: 1px solid $card-border-color;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+    background-color: #fff; // Card background
+
+    .views-field { // This might be too generic, target more specific field wrappers
+      // @extend .card-body;
+      // Manual styling:
+      padding: 1.25rem;
+    }
+  }
+}
+
+// General link styling
+a {
+  color: $link-color;
+  text-decoration: none;
+
+  &:hover {
+    color: $link-hover-color;
+    text-decoration: underline;
+  }
+}
+
+// Header styling example
+.site-header {
+  background-color: $navbar-background-color;
+  padding: 1rem 0;
+  border-bottom: 1px solid #dee2e6;
+}
+
+// Footer styling example
+.site-footer {
+  background-color: $footer-background-color;
+  color: $footer-text-color;
+  padding: 2rem 0;
+  margin-top: 2rem;
+
+  a {
+    color: lighten($footer-text-color, 25%);
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+// Add more specific component styles as needed.
+// Example: Style for node--candidatura.html.twig
+.node--type-candidatura.node--view-mode-full { // Example class from Twig template
+  .card-header {
+    background-color: lighten($primary, 45%);
+    border-bottom: 1px solid $card-border-color;
+  }
+  // Further styling for candidatura nodes...
+}
+
+// Utility classes (if not using Bootstrap's utilities directly or need overrides)
+.margin-bottom-md {
+  margin-bottom: 1.5rem; // Example utility
+}
+
+// Print styles
+@media print {
+  body {
+    background-color: #fff;
+    color: #000;
+  }
+  // Add more print-specific styles
+}

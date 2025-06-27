@@ -1,0 +1,132 @@
+uuid: null
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.candidatura.field_anexo_cv
+    - field.field.node.candidatura.field_distrito
+    - field.field.node.candidatura.field_idade_candidato
+    - field.field.node.candidatura.field_morada
+    - field.field.node.candidatura.field_nome
+    - node.type.candidatura
+  module:
+    - file
+    - path
+    - text
+id: node.candidatura.default
+targetEntityType: node
+bundle: candidatura
+mode: default
+content:
+  field_anexo_cv:
+    type: file_generic
+    weight: 4
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+  field_distrito:
+    type: options_select
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_idade_candidato:
+    type: number
+    weight: 3
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_morada:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_nome:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 6
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+hidden:
+  created: true
+  promote: true
+  sticky: true
+  uid: true
+  title: true # Title field is not explicitly needed as we use field_nome
+  langcode: true
+  moderation_state: true
+  menu_settings: true
+  url_redirects: true
+  revision_log_message: true
+  revision_uid: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true
+  created: true
+  path: true
+  menu_settings: true
+  revision_log: true
+  revision_timestamp: true
+  content_translation_source: true
+  content_translation_outdated: true
+  content_translation_uid: true
+  content_translation_created: true
+  default_langcode: true
+  langcode: true
+  moderation_state: true
+  publish_on: true
+  publish_state: true
+  scheduler_settings: true
+  sticky: true
+  translation: true
+  unpublish_on: true
+  url_redirects: true
+  status: true
+  uid: true
+  created: true
+  promote: true
+  sticky: true
+  title: true
+  path: true
+  menu_settings: true
+  moderation_state: true
+  publish_on: true
+  unpublish_on: true
+  scheduler_settings: true
+  content_translation_source: true
+  content_translation_outdated: true
+  content_translation_uid: true
+  content_translation_created: true
+  default_langcode: true
+  langcode: true
+  translation: true
+  url_redirects: true
+  revision_log: true
+  revision_timestamp: true
+  field_tags: true
+  comment: true
+  field_image: true
+  body: true
+  feeds_item: true

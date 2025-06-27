@@ -1,0 +1,75 @@
+uuid: null
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_distrito
+field_name: field_distrito
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: aveiro
+      label: Aveiro
+    -
+      value: beja
+      label: Beja
+    -
+      value: braga
+      label: Braga
+    -
+      value: braganca
+      label: Bragança
+    -
+      value: castelo_branco
+      label: 'Castelo Branco'
+    -
+      value: coimbra
+      label: Coimbra
+    -
+      value: evora
+      label: Évora
+    -
+      value: faro
+      label: Faro
+    -
+      value: guarda
+      label: Guarda
+    -
+      value: leiria
+      label: Leiria
+    -
+      value: lisboa
+      label: Lisboa
+    -
+      value: portalegre
+      label: Portalegre
+    -
+      value: porto
+      label: Porto
+    -
+      value: santarem
+      label: Santarém
+    -
+      value: setubal
+      label: Setúbal
+    -
+      value: viana_do_castelo
+      label: 'Viana do Castelo'
+    -
+      value: vila_real
+      label: 'Vila Real'
+    -
+      value: viseu
+      label: Viseu
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,154 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a node.
+ *
+ * Available variables:
+ * - node: The node entity with limited access to object properties and methods.
+ *   Only method names starting with "get", "has", or "is" and a few common
+ *   methods such as "id", "label", and "bundle" are available. For example:
+ *   - node.getCreatedTime() will work
+ *   - node.uri will not
+ * - label: The title of the node.
+ * - content: All node items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}. Use
+ *   {{ content|without('field_example') }} to temporarily suppress the printing
+ *   of a given child element.
+ * - author_picture: The node author's picture from user-picture.html.twig.
+ * - metadata: Metadata for this node.
+ * - date: Formatted creation date. Preprocess functions can reformat it by
+ *   creating a new variable in the preprocess function GIST:
+ *   https://gist.github.com/plach/2887ad8049cb66c5f8b069f1400f5108
+ * - label_hidden: Whether or not the node title should be displayed.
+ * - display_submitted: Whether submission information should be displayed.
+ * - attributes: HTML attributes for the containing element.
+ *   The attributes.class element may contain one or more of the following
+ *   classes:
+ *   - node: The current template type (also known as a "theming hook").
+ *   - node--type-[type]: The current node type. For example, if the node is an
+ *     "Article" it would result in "node--type-article". Note that the machine
+ *     name will often be in a short form of the human readable label.
+ *   - node--view-mode-[view_mode]: The View Mode of the node; for example, a
+ *     teaser would result in: "node--view-mode-teaser".
+ *   The following are controlled through the node publishing options.
+ *   - node--promoted: Appears on nodes promoted to the front page.
+ *   - node--sticky: Appears on nodes ordered above other non-sticky nodes in
+ *     lists.
+ *   - node--unpublished: Appears on unpublished nodes visible only to site
+ *     admins.
+ * - title_attributes: Same as attributes, except for the title element.
+ * - content_attributes: Same as attributes, except for the main content element.
+ * - author_attributes: Same as attributes, except for the author element.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed Hafter the main title tag that appears in the template.
+ * - view_mode: View mode; for example, "teaser" or "full".
+ * - teaser: Flag for teaser view mode.
+ * - page: Flag for full page view mode.
+ * - readmore: Flag to display a "Read more" link.
+ * - logged_in: Flag for authenticated user status. Will be true when the
+ *   current user is a logged-in member.
+ * - is_admin: Flag for admin user status. Will be true when the current user
+ *   is an administrator.
+ *
+ * @see template_preprocess_node()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+    'mb-4', 'p-4', 'border', 'rounded', 'shadow-sm' {# Bootstrap utility classes for card-like appearance #}
+  ]
+%}
+<article{{ attributes.addClass(classes) }}>
+
+  {{ title_prefix }}
+  {% if not page and label %}
+    <h2{{ title_attributes.addClass('node__title', 'mb-3', 'h4') }}>
+      <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+    </h2>
+  {% elseif label %}
+     {# For page view, field_nome might be used as title, or default label #}
+     {# Check how core.entity_view_display.node.candidatura.default.yml handles label #}
+     {# If field_nome is the de-facto title, this might be hidden or styled differently #}
+    <h1{{ title_attributes.addClass('node__title', 'mb-3', 'display-6') }}>{{ label }}</h1>
+  {% endif %}
+  {{ title_suffix }}
+
+  {% if display_submitted %}
+    <footer class="node__meta mb-3">
+      {{ author_picture }}
+      <div{{ author_attributes.addClass('node__submitted', 'text-muted', 'small') }}>
+        {% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}
+        {{ metadata }}
+      </div>
+    </footer>
+  {% endif %}
+
+  <div{{ content_attributes.addClass('node__content', 'mt-3') }}>
+    {#
+      Order and display fields as needed.
+      The `core.entity_view_display.node.candidatura.default.yml` controls which fields
+      are available in `content` and their default rendering.
+      You can choose to render them individually here for more control.
+    #}
+
+    {% if content.field_nome and view_mode == 'full' and not (label == content.field_nome[0]['#context'].value) %}
+      {# If field_nome is different from the main label, or if you want to ensure it's displayed #}
+      <div class="mb-3">
+        <h3 class="h5">{{ 'Nome do Candidato:'|t }}</h3>
+        <p>{{ content.field_nome }}</p>
+      </div>
+    {% endif %}
+
+    {% if content.field_morada %}
+      <div class="mb-3">
+        <h3 class="h6 text-muted">{{ 'Morada:'|t }}</h3>
+        <p>{{ content.field_morada }}</p>
+      </div>
+    {% endif %}
+
+    <div class="row mb-3">
+      {% if content.field_distrito %}
+        <div class="col-md-6">
+          <h3 class="h6 text-muted">{{ 'Distrito:'|t }}</h3>
+          <p>{{ content.field_distrito }}</p>
+        </div>
+      {% endif %}
+
+      {% if content.field_idade_candidato %}
+        <div class="col-md-6">
+          <h3 class="h6 text-muted">{{ 'Idade:'|t }}</h3>
+          <p>{{ content.field_idade_candidato }}</p>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if content.field_anexo_cv %}
+      <div class="mb-3">
+        <h3 class="h6 text-muted">{{ 'Anexo CV:'|t }}</h3>
+        <p>{{ content.field_anexo_cv }}</p> {# Renders the file link #}
+      </div>
+    {% endif %}
+
+    {# Print any remaining fields if necessary, though usually specific rendering is preferred #}
+    {# {{ content|without('field_nome', 'field_morada', 'field_distrito', 'field_idade_candidato', 'field_anexo_cv', 'links', 'comment') }} #}
+
+  </div>
+
+  {# Standard Drupal links like "Read more", "Add comment", etc. #}
+  {% if content.links %}
+    <div class="node__links mt-3">
+      {{ content.links }}
+    </div>
+  {% endif %}
+
+</article>

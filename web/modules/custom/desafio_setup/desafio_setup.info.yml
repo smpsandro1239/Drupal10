@@ -1,0 +1,5 @@
+name: 'Desafio Setup'
+type: module
+description: 'Configuration for the Desafio Candidaturas site, including the Candidatura content type.'
+core_version_requirement: ^10
+package: Custom

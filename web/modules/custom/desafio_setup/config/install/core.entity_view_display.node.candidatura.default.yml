@@ -1,0 +1,89 @@
+uuid: null
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.candidatura.field_anexo_cv
+    - field.field.node.candidatura.field_distrito
+    - field.field.node.candidatura.field_idade_candidato
+    - field.field.node.candidatura.field_morada
+    - field.field.node.candidatura.field_nome
+    - node.type.candidatura
+  module:
+    - file
+    - text
+    - user
+id: node.candidatura.default
+targetEntityType: node
+bundle: candidatura
+mode: default
+content:
+  field_anexo_cv:
+    type: file_default
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_distrito:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_idade_candidato:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_morada:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_nome:
+    type: string
+    label: hidden # Using this as the main title essentially
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 100 # Show nome first, perhaps as a title
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0 # Default position for links like read more, add comment etc.
+    region: content
+hidden:
+  langcode: true
+  title: true # Hiding the default title field if we use field_nome as the main identifier on display
+  uid: true
+  created: true
+  changed: true
+  search_api_excerpt: true # Common field added by Search API
+  comment: true
+  body: true
+  field_image: true
+  field_tags: true
+  feeds_item: true
+  content_translation_source: true
+  content_translation_outdated: true
+  content_translation_uid: true
+  content_translation_created: true
+  default_langcode: true
+  moderation_state: true
+  publish_on: true
+  publish_state: true
+  scheduler_settings: true
+  sticky: true
+  translation: true
+  unpublish_on: true
+  url_redirects: true

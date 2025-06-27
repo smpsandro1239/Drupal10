@@ -1,0 +1,7 @@
+name: Greeting Block
+type: module
+description: 'Módulo que exibe saudação ("Bom dia!" ou "Boa tarde!") em função da hora do dia.'
+core_version_requirement: ^10
+package: Custom
+dependencies:
+  - drupal:block
