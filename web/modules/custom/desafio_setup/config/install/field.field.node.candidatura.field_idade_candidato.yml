@@ -1,0 +1,23 @@
+uuid: null
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_idade_candidato
+    - node.type.candidatura
+id: node.candidatura.field_idade_candidato
+field_name: field_idade_candidato
+entity_type: node
+bundle: candidatura
+label: 'Idade do candidato'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 16
+  max: 99
+  prefix: ''
+  suffix: ' anos'
+field_type: integer

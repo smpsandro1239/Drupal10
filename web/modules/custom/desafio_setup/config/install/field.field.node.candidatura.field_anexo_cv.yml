@@ -1,0 +1,27 @@
+uuid: null
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_anexo_cv
+    - node.type.candidatura
+  module:
+    - file
+id: node.candidatura.field_anexo_cv
+field_name: field_anexo_cv
+entity_type: node
+bundle: candidatura
+label: 'Anexo do CV'
+description: 'Anexe o seu CV em formato PDF ou Word (DOC/DOCX).'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: 'cv-uploads/[date:custom:Y]/[date:custom:m]'
+  file_extensions: 'pdf doc docx'
+  max_filesize: '10 MB'
+  description_field: false
+field_type: file

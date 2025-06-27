@@ -1,0 +1,65 @@
+// Desafio Theme SCSS Variables
+// Based on the Bootstrap 5 framework and project requirements.
+
+// 1. Bootstrap Variable Overrides
+// These variables override Bootstrap's defaults.
+// You can find all Bootstrap SASS variables here:
+// [path-to-bootstrap-sources]/scss/_variables.scss (e.g., vendor/twbs/bootstrap/scss/_variables.scss)
+
+// Example: Change primary and secondary colors
+$primary: #0d6efd; // Bootstrap's default blue, you can change this
+$secondary: #6c757d; // Bootstrap's default secondary gray
+
+// Example: Change font family
+// $font-family-sans-serif: "Helvetica Neue", Arial, sans-serif;
+// $font-family-base: $font-family-sans-serif;
+
+// Example: Adjust container max widths for different breakpoints
+// $container-max-widths: (
+//   sm: 540px,
+//   md: 720px,
+//   lg: 960px,
+//   xl: 1140px
+//   // xxl: 1320px // Bootstrap 5.1+
+// );
+
+// 2. Custom Theme Variables
+// Define your own variables specific to this theme.
+
+$brand-primary: $primary; // Using Bootstrap's primary as the main brand color
+$brand-secondary: darken($primary, 15%); // A darker shade of primary for accents
+
+// Text colors
+$text-color: #333;
+$link-color: $primary;
+$link-hover-color: darken($link-color, 10%);
+
+// Specific component styling variables (examples)
+$card-border-color: #ddd;
+$navbar-background-color: #f8f9fa; // Light gray, similar to Bootstrap's default
+$footer-background-color: #343a40; // Dark gray
+$footer-text-color: #fff;
+
+// Variables from the provided plan
+// $primary: #007bff; // Already defined above, choose one
+// $secondary: #6c757d; // Already defined above
+$success: #28a745;
+$info: #17a2b8;
+$warning: #ffc107;
+$danger: #dc3545;
+
+// Custom variables from the plan
+// $brand-primary: #007bff; // Already defined as $primary
+// $brand-secondary: #6610f2; // This is a new color, let's use it.
+$custom-brand-purple: #6610f2;
+
+
+// It's good practice to keep this file for variable definitions only.
+// Actual CSS rules should go into other SASS partials or style.scss.
+
+// Ensure Bootstrap's functions and mixins are available if you use them here,
+// though typically they are imported in the main style.scss before variables
+// if variables depend on them (which is rare).
+// For overriding Bootstrap variables, this file is loaded *before* Bootstrap's main SASS file.
+// For using Bootstrap functions/mixins to define *new* variables, ensure Bootstrap's
+// functions are imported first in your main SASS file.

@@ -1,0 +1,57 @@
+name: Desafio Theme
+type: theme
+description: 'Tema personalizado para o Desafio Web Developer, baseado no Bootstrap 5.'
+core_version_requirement: ^10
+base theme: bootstrap5 # Specifies that this theme uses bootstrap5 as its base.
+
+libraries:
+  - desafio_theme/global_styles # Loads the SASS-compiled CSS and any JS.
+
+regions:
+  header: 'Header'
+  primary_menu: 'Primary menu'
+  secondary_menu: 'Secondary menu'
+  page_title: 'Page title'
+  breadcrumb: 'Breadcrumb'
+  highlighted: 'Highlighted'
+  help: 'Help'
+  content_above: 'Content above'
+  content: 'Content' # Main content area.
+  sidebar_first: 'Sidebar first'
+  sidebar_second: 'Sidebar second'
+  content_below: 'Content below'
+  footer: 'Footer'
+
+# Information added by Drupal.org packaging script on 2023-11-17
+version: '1.0.0' # Example version
+project: 'desafio_theme'
+datestamp: 1700000000 # Example datestamp
+
+# Remove if you are not using Bootstrap Icons.
+libraries-override:
+  bootstrap5/global-styling:
+    css:
+      theme:
+        css/style/bootstrap5.css: false # Disable the default Bootstrap 5 CSS if you are fully overriding or recompiling.
+        css/style/bootstrap-icons.css: false # Optionally disable Bootstrap Icons if not used or included differently.
+
+# Remove if you are not using Popper.
+# libraries_extend:
+#   core/drupal.bootstrap5:
+#     - bootstrap5/popper
+#   core/drupal.ajax:
+#     - bootstrap5/popper
+
+# Optionally add Bootstrap Icons if you want them.
+# libraries:
+#   - desafio_theme/global_styles
+#   - desafio_theme/bootstrap_icons # If you define this library
+
+# ckeditor_stylesheets:
+#   - css/style.css # If you want your theme's CSS in CKEditor 5.
+
+# regions_hidden:
+#   - top_header # Example of hiding a region from the base theme if not needed.
+
+# Image for theme selection page
+# screenshot: desafio_theme.png # You would need to create this image.

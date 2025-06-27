@@ -1,0 +1,21 @@
+uuid: null
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_morada
+    - node.type.candidatura
+  module:
+    - text
+id: node.candidatura.field_morada
+field_name: field_morada
+entity_type: node
+bundle: candidatura
+label: Morada
+description: 'Morada completa do candidato.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

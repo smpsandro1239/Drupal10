@@ -1,0 +1,24 @@
+global_styles:
+  version: 1.x
+  css:
+    theme:
+      css/style.css: {} # This will be your compiled SASS.
+  js:
+    # js/script.js: {} # Uncomment if you add custom JavaScript.
+  dependencies:
+    - core/jquery # Drupal's jQuery.
+    - core/drupal # Drupal's core JS.
+    - core/drupalSettings # To pass data from PHP to JavaScript.
+    # - bootstrap5/bootstrap5 # Dependency on the base theme's main library if needed.
+    #   If you are compiling Bootstrap SASS into your style.css, you might not need this,
+    #   or you might need it for Bootstrap's JS.
+    #   The `base theme: bootstrap5` in info.yml should handle JS.
+    #   The `libraries-override` in info.yml can prevent double-loading of CSS.
+
+# Uncomment if you want to include Bootstrap Icons separately
+# bootstrap_icons:
+#   version: 1.x
+#   css:
+#     theme:
+#       # Adjust path if you download them or use a CDN
+#       https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css: { type: external, minified: true }
