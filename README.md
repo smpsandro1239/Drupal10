@@ -150,4 +150,33 @@ web/
 
 Este README fornece os passos essenciais para configurar e testar o projeto.
 Lembre-se que a criação da View e a compilação do SASS são passos manuais cruciais.
+
+## Melhorias de Profissionalismo (Recente)
+
+Foram implementadas melhorias significativas no tema `desafio_theme` e nos templates para um aspeto mais profissional:
+
+*   **Estilos SASS Refinados:**
+    *   Paleta de cores, tipografia, espaçamento e estilos globais foram aprimorados em `scss/_variables.scss` e `scss/style.scss`.
+    *   Estilização melhorada para formulários, mensagens do Drupal, tabelas de Views, paginação, e o bloco de saudação.
+    *   Adicionada estrutura básica para cabeçalho e rodapé do site.
+*   **Template `node--candidatura.html.twig` Melhorado:**
+    *   Utiliza classes do Bootstrap 5 (como Cards e Grid) para uma apresentação mais estruturada e profissional das páginas de candidatura individual.
+*   **Ajustes no Formulário de Candidatura:**
+    *   Adicionados placeholders e descrições de ajuda para maior clareza nos campos do formulário de submissão de candidatura (via arquivos YAML no módulo `desafio_setup`).
+*   **Recomendações para a View "Pesquisar CVs":**
+    *   Foram dadas sugestões detalhadas sobre como configurar a View na interface do Drupal para melhor aproveitar os estilos do tema e as funcionalidades do Bootstrap (ex: formato Tabela vs. Lista de entidades renderizadas, classes CSS, etc.).
+
+**Importante após atualizações:**
+*   **Recompile o SASS:** Sempre que houver alterações nos ficheiros `.scss` do tema `desafio_theme`, é crucial recompilar para `css/style.css`:
+    ```bash
+    sass web/themes/custom/desafio_theme/scss/style.scss web/themes/custom/desafio_theme/css/style.css
+    ```
+*   **Limpe o Cache do Drupal:** Após ativar módulos, alterar configurações, ou atualizar o tema, limpe sempre o cache:
+    ```bash
+    drush cr
+    ```
+    Ou através da interface administrativa em `/admin/config/development/performance`.
+*   **Aplique as Configurações YAML:** Se atualizou ficheiros YAML de configuração de módulos já instalados (como `desafio_setup`), essas alterações precisam ser importadas para a configuração ativa do site (geralmente via `drush config:import` ou pela UI de gestão de configuração), ou aplicando as alterações manualmente na UI do Drupal.
+
+Estas melhorias visam elevar a qualidade visual e a experiência de utilização do site.
 ```

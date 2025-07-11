@@ -10,7 +10,7 @@ field_name: field_idade_candidato
 entity_type: node
 bundle: candidatura
 label: 'Idade do candidato'
-description: ''
+description: 'Insira a sua idade atual em anos.' # Added description
 required: true
 translatable: false
 default_value: {  }
