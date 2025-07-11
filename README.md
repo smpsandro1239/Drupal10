@@ -1,28 +1,31 @@
 # Desafio Web Developer - Drupal 10: Gestão de Candidaturas
 
-Este projeto implementa um site básico em Drupal 10 para gestão de candidaturas a vagas de emprego, conforme o desafio técnico proposto.
+Este projeto implementa um site básico em Drupal 10 para gestão de candidaturas a vagas de emprego, conforme o desafio técnico proposto. Demonstra funcionalidades core do Drupal, desenvolvimento de módulos e temas.
 
 ## Funcionalidades Implementadas
 
 1.  **Sistema de Submissão de CVs (Componente 1):**
     *   **Tipo de Conteúdo "Candidatura"**:
         *   Campos: Nome, Morada, Distrito (dropdown), Idade do candidato, Anexo do CV (ficheiro PDF/DOC/DOCX).
-        *   Configurado através do módulo customizado `desafio_setup`.
-    *   **Página de Pesquisa de CVs**:
-        *   URL: `/pesquisar-cvs`
-        *   Exibe CVs submetidos.
-        *   Permite filtrar por Distrito e Idade.
-        *   *Esta View deve ser criada manualmente pelo utilizador através da UI do Drupal.*
+        *   Toda a configuração do tipo de conteúdo e dos seus campos é fornecida pelo módulo `desafio_setup` através de ficheiros YAML em `config/install`.
+    *   **Página de Pesquisa de CVs (`/pesquisar-cvs`)**:
+        *   Exibe CVs submetidos numa tabela com paginação.
+        *   Permite filtrar por Distrito e Idade (mínima).
+        *   A View é definida no ficheiro `views.view.pesquisar_cvs.yml` dentro do módulo `desafio_setup`, sendo criada automaticamente com a ativação do módulo.
 
 2.  **Bloco de Saudação Dinâmica (Componente 2):**
     *   Módulo customizado `greeting_block`.
     *   Exibe "Bom dia!", "Boa tarde!" ou "Boa noite!" com base na hora do servidor.
-    *   O bloco fica disponível para ser adicionado a qualquer região através da UI de Blocos do Drupal.
+    *   O bloco é automaticamente posicionado na região "Content" do tema `desafio_theme` através do ficheiro `block.block.desafio_theme_greetingblock.yml` no módulo `greeting_block`.
 
 3.  **Tema Personalizado com Bootstrap 5 (Componente 3):**
     *   Tema customizado `desafio_theme`, subtema do `bootstrap5`.
-    *   Inclui estrutura SASS para personalização de estilos.
-    *   Template Twig `node--candidatura.html.twig` para estilizar a visualização das candidaturas.
+    *   Inclui estrutura SASS para personalização de estilos (`scss/_variables.scss` e `scss/style.scss`).
+    *   Template Twig `node--candidatura.html.twig` para estilizar a visualização detalhada das candidaturas.
+
+4.  **Qualidade de Código e Boas Práticas:**
+    *   **Gestão de Configuração:** As configurações do tipo de conteúdo, da View de pesquisa e do posicionamento do bloco são fornecidas como ficheiros YAML nos respetivos módulos, demonstrando o uso do sistema de Configuration Management do Drupal.
+    *   **Testes Unitários:** O módulo `greeting_block` inclui um teste unitário (`GreetingBlockTest.php`) para validar a lógica de saudação do bloco.
 
 ## Estrutura de Diretórios Relevantes
 
@@ -30,11 +33,20 @@ Este projeto implementa um site básico em Drupal 10 para gestão de candidatura
 web/
 ├── modules/
 │   └── custom/
-│       ├── desafio_setup/      # Módulo para configuração inicial (Content Type Candidatura)
+│       ├── desafio_setup/      # Módulo para configuração inicial (Content Type Candidatura, View Pesquisar CVs)
 │       │   ├── config/install/ # Arquivos YAML de configuração
+│       │   │   ├── node.type.candidatura.yml
+│       │   │   ├── field.storage.node.*.yml
+│       │   │   ├── field.field.node.candidatura.*.yml
+│       │   │   ├── core.entity_form_display.node.candidatura.default.yml
+│       │   │   ├── core.entity_view_display.node.candidatura.default.yml
+│       │   │   └── views.view.pesquisar_cvs.yml
 │       │   └── desafio_setup.info.yml
 │       └── greeting_block/     # Módulo do bloco de saudação
+│           ├── config/install/
+│           │   └── block.block.desafio_theme_greetingblock.yml
 │           ├── src/Plugin/Block/GreetingBlock.php
+│           ├── tests/src/Unit/GreetingBlockTest.php
 │           └── greeting_block.info.yml
 └── themes/
     └── custom/
@@ -53,7 +65,7 @@ web/
 ## Instruções de Instalação e Configuração Local
 
 **Pré-requisitos:**
-*   Ambiente Drupal 10 funcional (PHP, Composer, Servidor Web, Base de Dados).
+*   Ambiente Drupal 10 funcional (PHP >= 8.1, Composer, Servidor Web, Base de Dados).
 *   Drush (recomendado).
 *   SASS Compiler (e.g., Dart SASS: `npm install -g sass`).
 *   Tema base Bootstrap 5 para Drupal (`drupal/bootstrap5`).
@@ -64,18 +76,24 @@ web/
     *   Coloque os módulos `desafio_setup` e `greeting_block` na pasta `web/modules/custom/`.
     *   Coloque o tema `desafio_theme` na pasta `web/themes/custom/`.
 
-2.  **Instalar Tema Base Bootstrap 5:**
-    *   Se ainda não o fez, execute na raiz do seu projeto Drupal:
+2.  **Instalar Dependências (incluindo Tema Base Bootstrap 5):**
+    *   Execute na raiz do seu projeto Drupal:
         ```bash
         composer require drupal/bootstrap5
         ```
-    *   Aceda a `/admin/appearance` e instale o tema "Bootstrap 5" (não precisa de o definir como padrão).
+    *   (Opcional, se o Bootstrap 5 ainda não estiver instalado como tema) Aceda a `/admin/appearance` e instale o tema "Bootstrap 5". Ele não precisa ser o tema padrão, apenas estar instalado para que o `desafio_theme` funcione como subtema.
 
-3.  **Ativar Módulo de Setup (Content Type):**
+3.  **Ativar os Módulos Customizados:**
     *   Aceda a `/admin/modules`.
-    *   Ative o módulo "Desafio Setup".
-    *   Isto irá criar o tipo de conteúdo "Candidatura" com os campos especificados.
-    *   Em alternativa, via Drush: `drush en desafio_setup -y`
+    *   Ative os módulos "Desafio Setup" e "Greeting Block".
+    *   Em alternativa, via Drush:
+        ```bash
+        drush en desafio_setup greeting_block -y
+        ```
+    *   **Importante:** A ativação destes módulos irá:
+        *   Criar o tipo de conteúdo "Candidatura" e seus campos.
+        *   Criar a View "Pesquisar CVs" em `/pesquisar-cvs`.
+        *   Posicionar o bloco "Saudação Dinâmica" (se o tema `desafio_theme` já estiver ativo ou for ativado posteriormente).
 
 4.  **Configurar Permissões para "Candidatura":**
     *   Aceda a `/admin/people/permissions`.
@@ -84,37 +102,7 @@ web/
         *   **Authenticated user**: `Candidatura: Create new content` (e outras que desejar, como editar/ver as próprias).
     *   Guarde as permissões.
 
-5.  **Criar View "Pesquisar CVs":**
-    *   Aceda a `/admin/structure/views` e clique em "Add view".
-    *   **Configuração básica:**
-        *   Nome: `Pesquisar CVs`
-        *   Mostrar: `Content` do tipo `Candidatura`.
-        *   Ordenar por: `Newest first`.
-    *   **Criar página:**
-        *   Título da Página: `Pesquisar Candidaturas`
-        *   Caminho: `/pesquisar-cvs`
-        *   Formato de exibição: `Table` ou `Unformatted list` (usando "Rendered entity" para aplicar o template Twig).
-    *   **Configuração da View (após clicar em "Continue & configure"):**
-        *   **Campos:** Adicione `Nome (field_nome)`, `Distrito (field_distrito)`, `Idade (field_idade_candidato)`, `Anexo CV (field_anexo_cv)`, `Authored on (Data de submissão)`.
-        *   **Filtros Expostos:**
-            *   `Content: Distrito (field_distrito)` (Dropdown)
-            *   `Content: Idade do candidato (field_idade_candidato)` (Operador: "Is greater than or equal to")
-        *   **Paginação:** `Display a specified number of items` | `20 items`.
-    *   Guarde a View.
-
-6.  **Ativar Módulo "Greeting Block":**
-    *   Aceda a `/admin/modules`.
-    *   Ative o módulo "Greeting Block".
-    *   Via Drush: `drush en greeting_block -y`
-    *   Limpe o cache do Drupal: `drush cr` ou em `/admin/config/development/performance`.
-
-7.  **Adicionar Bloco de Saudação:**
-    *   Aceda a `/admin/structure/block`.
-    *   Escolha uma região e clique em "Place block".
-    *   Procure e adicione o bloco "Saudação Dinâmica".
-    *   Configure a visibilidade se necessário e guarde.
-
-8.  **Compilar SASS para o Tema:**
+5.  **Compilar SASS para o Tema:**
     *   Navegue até à raiz do seu projeto Drupal no terminal.
     *   Execute o comando de compilação SASS:
         ```bash
