@@ -1,178 +1,449 @@
-// Desafio Theme SCSS Main File
+// Desafio Theme SCSS Main File - Enhanced for Professionalism
 
-// 1. Import Bootstrap functions and variables (Required for overrides)
-// Adjust the path according to your Bootstrap source files location.
-// This path assumes Bootstrap SASS files are in node_modules or a similar vendor directory.
-// If using the drupal/bootstrap5 theme, it might handle this differently,
-// or you might need to link to its SASS sources if you intend to recompile it fully.
-// For a subtheme, you often override variables and add custom CSS on top.
-
-// Option A: If Bootstrap SASS is available in node_modules (typical for frontend projects)
-// @import "../../../../node_modules/bootstrap/scss/functions"; // Path relative to this file
-// @import "variables"; // Your custom variable overrides
-// @import "../../../../node_modules/bootstrap/scss/variables"; // Bootstrap's default variables
-// @import "../../../../node_modules/bootstrap/scss/maps";
-// @import "../../../../node_modules/bootstrap/scss/mixins";
-// @import "../../../../node_modules/bootstrap/scss/utilities";
-
-
-// Option B: Simpler approach for Drupal subthemes - just import your variables,
-// and let the base theme (drupal/bootstrap5) load the main Bootstrap CSS.
-// Then, your custom rules here will add to or override the base theme's styles.
-// If `libraries-override` is used to disable base theme's Bootstrap CSS,
-// then you MUST compile Bootstrap fully here.
-
-// Assuming `drupal/bootstrap5` base theme handles loading Bootstrap core SASS/CSS.
-// We will just define our overrides and additional styles.
-// If you have disabled the base theme's Bootstrap CSS via `libraries-override`
-// then you need to import the full Bootstrap SASS here.
-
-// For now, let's assume we are *adding* styles and *overriding* via specificity,
-// or that the base theme provides a way to hook in these variable overrides.
-// The `bootstrap5` Drupal theme is designed to be subthemed. Check its documentation
-// for the recommended way to compile SASS. Often, you'd import your custom variables,
-// then the parts of Bootstrap you need, then your custom rules.
-
-// Let's try a common subtheming pattern:
-// Import local variables first. These will be used by your custom rules.
+// 1. Import Local Variables
+// Your custom variables, including Bootstrap overrides if you've defined them there.
 @import "variables";
 
-// If you want to re-compile Bootstrap entirely (e.g., if base theme CSS is disabled):
-// This requires Bootstrap SASS sources to be available.
-// The path below is a placeholder. You'll need to point it to where
-// the Bootstrap SASS files are located in your Drupal installation
-// (e.g., in `web/libraries/bootstrap` or `vendor/twbs/bootstrap/scss`
-// or from the Bootstrap 5 base theme `web/themes/contrib/bootstrap5/scss`)
+// 2. Import Bootstrap (Optional - if compiling Bootstrap fully)
+// If your base theme (drupal/bootstrap5) already loads Bootstrap CSS,
+// and you are only adding *overrides* and *additional* styles, you might not need this.
+// If you disabled the base theme's CSS via `libraries-override` in info.yml,
+// or want to fully recompile Bootstrap with your variable overrides, then you MUST import it.
+// The path should point to the main Bootstrap SASS file (e.g., from the contrib theme or a library).
+// Example: @import "../../../../contrib/bootstrap5/scss/bootstrap";
+// For this example, we'll assume Bootstrap's CSS is primarily handled by the base theme,
+// and these styles will layer on top or override with higher specificity.
+// If using @extend for Bootstrap classes, you *would* need relevant Bootstrap SASS parts imported.
 
-// Example for full Bootstrap compilation:
-// @import "../../../../contrib/bootstrap5/scss/bootstrap"; // Adjust path as needed
+// 3. Global Styling & Resets
+html {
+  box-sizing: border-box;
+  font-size: 100%; // Base for rem units
+}
 
-// Custom styles for Desafio Theme
-// These styles will be applied on top of or alongside Bootstrap.
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
 
 body {
-  font-family: sans-serif; // Basic font
-  color: $text-color;
-  padding-top: 56px; // If using a fixed Bootstrap navbar
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-base;
+  line-height: $line-height-base;
+  color: $dark-gray;
+  background-color: $white;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-// Greeting Block Style (from project plan)
-.greeting-block-content { // Changed from .greeting-block to be more specific
-  background: linear-gradient(45deg, $brand-primary, $custom-brand-purple);
-  color: white;
-  padding: 1rem;
-  border-radius: 0.5rem;
+// 4. Typography
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-base; // Could use a specific heading font here too
+  font-weight: $headings-font-weight;
+  line-height: $headings-line-height;
+  color: $headings-color;
+  margin-top: 0;
+  margin-bottom: $headings-margin-bottom;
+}
+
+h1 { font-size: $h1-font-size; }
+h2 { font-size: $h2-font-size; }
+h3 { font-size: $h3-font-size; }
+h4 { font-size: $h4-font-size; }
+h5 { font-size: $h5-font-size; }
+h6 { font-size: $h6-font-size; }
+
+p {
+  margin-top: 0;
+  margin-bottom: $spacer;
+}
+
+a {
+  color: $link-color;
+  text-decoration: $link-decoration;
+  transition: color 0.15s ease-in-out, text-decoration 0.15s ease-in-out;
+
+  &:hover {
+    color: $link-hover-color;
+    text-decoration: $link-hover-decoration;
+  }
+}
+
+// 5. Basic Layout Elements (Site Header, Main Content, Footer)
+.layout-container {
+  max-width: 1200px; // Or your preferred max width
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: map-get($spacers, 3);
+  padding-right: map-get($spacers, 3);
+}
+
+.site-header {
+  background-color: $navbar-bg; // Using a variable, could be $white or $light-gray
+  padding: $navbar-padding-y $navbar-padding-x;
+  border-bottom: $border-width solid $border-color;
+  // Add more styles for logo, navigation, etc.
+  // Example:
+  // .site-branding__name a {
+  //   font-size: $navbar-brand-font-size;
+  //   color: $primary;
+  //   font-weight: $headings-font-weight;
+  //   &:hover { text-decoration: none; }
+  // }
+}
+
+.main-content {
+  padding-top: map-get($spacers, 4);
+  padding-bottom: map-get($spacers, 4);
+}
+
+.site-footer {
+  background-color: $footer-bg;
+  color: $footer-color;
+  padding: map-get($spacers, 5) $navbar-padding-x;
+  margin-top: map-get($spacers, 5);
   text-align: center;
-  font-weight: bold;
-  margin-bottom: 1rem;
+
+  a {
+    color: $footer-link-color;
+    &:hover {
+      color: $footer-link-hover-color;
+    }
+  }
+  p {
+    margin-bottom: map-get($spacers, 1);
+  }
 }
 
-// Candidatura Form Styling (from project plan)
-// Add a wrapper class to your form via hook_form_alter or a Twig template if needed
+// 6. Drupal Specific Styling
+// Messages (status, warning, error)
+.messages {
+  padding: $spacer;
+  margin-bottom: $spacer;
+  border: $border-width solid transparent;
+  border-radius: $border-radius;
+
+  &--status {
+    color: darken($success, 15%);
+    background-color: lighten($success, 55%);
+    border-color: lighten($success, 35%);
+  }
+  &--warning {
+    color: darken($warning, 15%);
+    background-color: lighten($warning, 45%);
+    border-color: lighten($warning, 25%);
+  }
+  &--error {
+    color: darken($danger, 15%);
+    background-color: lighten($danger, 45%);
+    border-color: lighten($danger, 25%);
+    a {
+      color: darken($danger, 25%);
+      font-weight: bold;
+    }
+  }
+}
+
+// Tabs
+ul.tabs--primary {
+  border-bottom: $border-width solid $border-color;
+  padding-left: 0;
+  margin-bottom: $spacer * 1.5;
+  list-style: none;
+  display: flex;
+
+  li.tabs__tab {
+    margin-bottom: -$border-width;
+    a {
+      display: block;
+      padding: ($spacer * 0.5) ($spacer);
+      color: $secondary;
+      border: $border-width solid transparent;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+      text-decoration: none;
+      &:hover {
+        background-color: $light-gray;
+        border-color: $border-color $border-color transparent $border-color;
+        color: $primary;
+      }
+    }
+    &.is-active a {
+      background-color: $white;
+      border-color: $border-color $border-color $white $border-color;
+      color: $primary;
+      font-weight: $headings-font-weight;
+    }
+  }
+}
+
+
+// 7. Component Styling
+
+// Greeting Block
+.greeting-block-content {
+  background: linear-gradient(45deg, $greeting-block-bg-start, $greeting-block-bg-end);
+  color: $greeting-block-color;
+  padding: $greeting-block-padding;
+  border-radius: $greeting-block-border-radius;
+  text-align: center;
+  font-weight: $headings-font-weight;
+  margin-bottom: map-get($spacers, 4);
+  box-shadow: $box-shadow-sm;
+}
+
+// Candidatura Form
+// Ensure your form has this class or target Drupal's default form classes
 .candidatura-form {
+  // General form item styling
   .form-item {
-    margin-bottom: 1.5rem;
+    margin-bottom: map-get($spacers, 3);
+
+    label {
+      display: block;
+      font-weight: 600; // Slightly bolder labels
+      margin-bottom: map-get($spacers, 1);
+      color: $dark-gray;
+    }
   }
 
-  // Using Bootstrap's @extend for buttons.
-  // Ensure Bootstrap's SASS is imported if using @extend.
-  // If not compiling Bootstrap SASS directly, apply classes in HTML/Twig.
-  .form-submit {
+  // Input fields (text, email, number, etc.)
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="url"],
+  input[type="search"],
+  input[type="password"],
+  textarea,
+  select {
+    display: block;
+    width: 100%;
+    padding: $btn-padding-y $btn-padding-x;
+    font-family: $font-family-base;
+    font-size: $font-size-base;
+    font-weight: $font-weight-base;
+    line-height: $line-height-base;
+    color: $input-color;
+    background-color: $input-bg;
+    background-clip: padding-box;
+    border: $border-width solid $input-border-color;
+    border-radius: $border-radius;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+    &:focus {
+      color: $input-color;
+      background-color: $input-bg;
+      border-color: $input-focus-border-color;
+      outline: 0;
+      box-shadow: $input-focus-box-shadow;
+    }
+    &::placeholder {
+      color: $input-placeholder-color;
+      opacity: 1;
+    }
+  }
+
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  // File input (basic styling, actual file input is hard to style directly)
+  input[type="file"] {
+    // Basic styling, can be enhanced with JS or more complex CSS
+    border: $border-width solid $input-border-color;
+    padding: map-get($spacers, 2);
+    border-radius: $border-radius;
+    &:hover {
+      border-color: darken($input-border-color, 10%);
+    }
+  }
+  .form-managed-file__meta {
+    font-size: $font-size-base * 0.9;
+    color: $secondary;
+  }
+
+
+  // Submit button styling (using Bootstrap classes is often preferred for consistency)
+  // If not using Bootstrap classes directly on the button:
+  .form-submit, button[type="submit"] {
+    // Apply Bootstrap button styles if Bootstrap SASS is imported and @extend is used
     // @extend .btn;
     // @extend .btn-primary;
-    // @extend .btn-lg;
-    // If not extending, apply classes directly in Twig or form alter:
-    // e.g., $form['actions']['submit']['#attributes']['class'][] = 'btn btn-primary btn-lg';
-    // For SASS styling without @extend:
-    padding: 0.5rem 1rem;
-    font-size: 1.25rem;
-    line-height: 1.5;
-    border-radius: 0.3rem;
-    color: #fff;
-    background-color: $primary;
-    border-color: $primary;
+    // @extend .btn-lg; // Or .btn-md
+
+    // Manual styling if not extending (or to override)
+    display: inline-block;
+    font-weight: $font-weight-base;
+    line-height: $line-height-base;
+    color: $white;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
     cursor: pointer;
+    user-select: none;
+    background-color: $primary;
+    border: $border-width solid $primary;
+    padding: ($btn-padding-y * 1.25) ($btn-padding-x * 1.5); // Larger button
+    font-size: $font-size-base * 1.1; // Slightly larger font
+    border-radius: $border-radius;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
     &:hover {
       background-color: darken($primary, 10%);
       border-color: darken($primary, 10%);
+      color: $white;
+      text-decoration: none;
+    }
+    &:focus {
+      outline: 0;
+      box-shadow: $input-focus-box-shadow; // Use same focus as inputs
     }
   }
 }
 
-// CV Search Results Styling (from project plan)
-// These classes would typically be added in the Views UI or Views templates.
+
+// CV Search Results (Views)
 .cv-search-results {
-  .views-row {
-    // @extend .card; // If Bootstrap SASS is compiled
-    // @extend .mb-3;
-    // Manual styling if not extending:
-    border: 1px solid $card-border-color;
-    border-radius: 0.25rem;
-    margin-bottom: 1rem;
-    background-color: #fff; // Card background
+  // Styling for exposed form filters (if View has them)
+  .views-exposed-form {
+    background-color: $light-gray;
+    padding: map-get($spacers, 3);
+    border-radius: $border-radius-lg;
+    margin-bottom: map-get($spacers, 4);
+    border: $border-width solid $border-color;
 
-    .views-field { // This might be too generic, target more specific field wrappers
-      // @extend .card-body;
-      // Manual styling:
-      padding: 1.25rem;
+    .form-item {
+      margin-bottom: map-get($spacers, 2); // Less margin in exposed forms
+      label {
+        font-weight: normal; // Less prominent labels
+      }
+    }
+    .form-actions .form-submit { // Style the submit button in exposed forms
+      padding: $btn-padding-y $btn-padding-x;
+      font-size: $font-size-base;
+      // @extend .btn-secondary; // Example if using Bootstrap extends
+      background-color: $secondary;
+      border-color: $secondary;
+       &:hover {
+        background-color: darken($secondary, 10%);
+        border-color: darken($secondary, 10%);
+      }
+    }
+  }
+
+  // Styling for the results list/table
+  .views-view-table { // If using a table format
+    width: 100%;
+    margin-bottom: $spacer;
+    border-collapse: collapse;
+
+    thead th {
+      background-color: $light-gray;
+      color: $dark-gray;
+      padding: map-get($spacers, 2) map-get($spacers, 3);
+      text-align: left;
+      border-bottom: ($border-width * 2) solid $border-color;
+      font-weight: $headings-font-weight;
+    }
+    tbody td {
+      padding: map-get($spacers, 2) map-get($spacers, 3);
+      border-bottom: $border-width solid $border-color;
+      vertical-align: top;
+    }
+    tbody tr:hover {
+      background-color: lighten($light-gray, 2%);
+    }
+  }
+
+  .views-row { // If using unformatted list of rendered entities or fields
+    // This will be styled by node--candidatura.html.twig if "Rendered entity" is used.
+    // If displaying fields, you can style them here.
+    // Example:
+    // border: $border-width solid $card-border-color;
+    // border-radius: $card-border-radius;
+    // margin-bottom: map-get($spacers, 3);
+    // padding: $card-spacer-x;
+    // background-color: $card-bg;
+    // box-shadow: $box-shadow-sm;
+
+    // .views-field {
+    //   padding-bottom: map-get($spacers, 2);
+    //   &:last-child {
+    //     padding-bottom: 0;
+    //   }
+    // }
+  }
+
+  // Pager styling
+  .pager__items {
+    list-style: none;
+    padding-left: 0;
+    text-align: center;
+    margin-top: map-get($spacers, 4);
+
+    .pager__item {
+      display: inline-block;
+      margin: 0 map-get($spacers, 1);
+
+      a, span {
+        display: inline-block;
+        padding: map-get($spacers, 1) map-get($spacers, 2);
+        border: $border-width solid $border-color;
+        border-radius: $border-radius;
+        text-decoration: none;
+        color: $link-color;
+        background-color: $white;
+        &:hover {
+          background-color: $light-gray;
+          color: $link-hover-color;
+        }
+      }
+      &.is-active a, &.is-active span {
+        background-color: $primary;
+        border-color: $primary;
+        color: $white;
+        font-weight: $headings-font-weight;
+      }
     }
   }
 }
 
-// General link styling
-a {
-  color: $link-color;
-  text-decoration: none;
 
-  &:hover {
-    color: $link-hover-color;
-    text-decoration: underline;
-  }
+// 8. Utility Classes (Optional - Bootstrap provides many)
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.hidden { display: none !important; }
+.visually-hidden { // For accessibility, hides visually but not from screen readers
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px); // IE6, IE7
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap; // Added for better screen reader compatibility
 }
 
-// Header styling example
-.site-header {
-  background-color: $navbar-background-color;
-  padding: 1rem 0;
-  border-bottom: 1px solid #dee2e6;
-}
 
-// Footer styling example
-.site-footer {
-  background-color: $footer-background-color;
-  color: $footer-text-color;
-  padding: 2rem 0;
-  margin-top: 2rem;
-
-  a {
-    color: lighten($footer-text-color, 25%);
-    &:hover {
-      color: #fff;
-    }
-  }
-}
-
-// Add more specific component styles as needed.
-// Example: Style for node--candidatura.html.twig
-.node--type-candidatura.node--view-mode-full { // Example class from Twig template
-  .card-header {
-    background-color: lighten($primary, 45%);
-    border-bottom: 1px solid $card-border-color;
-  }
-  // Further styling for candidatura nodes...
-}
-
-// Utility classes (if not using Bootstrap's utilities directly or need overrides)
-.margin-bottom-md {
-  margin-bottom: 1.5rem; // Example utility
-}
-
-// Print styles
+// 9. Print Styles
 @media print {
   body {
-    background-color: #fff;
-    color: #000;
+    background-color: $white !important;
+    color: $black !important;
+    font-size: 12pt; // Adjust for print
   }
-  // Add more print-specific styles
+  .site-header, .site-footer, .greeting-block-content, .views-exposed-form, .pager {
+    display: none !important; // Hide non-essential elements
+  }
+  a {
+    text-decoration: underline;
+    color: $black !important;
+  }
+  // Add more print-specific styles as needed
 }
+
+```
