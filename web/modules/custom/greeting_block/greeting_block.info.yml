@@ -1,7 +1,7 @@
-name: Greeting Block
+name: 'Bloco de Saudação Dinâmica'
 type: module
-description: 'Módulo que exibe saudação ("Bom dia!" ou "Boa tarde!") em função da hora do dia.'
+description: 'Módulo que exibe uma saudação dinâmica ("Bom dia!", "Boa tarde!" ou "Boa noite!") baseada na hora do servidor.'
 core_version_requirement: ^10
-package: Custom
+package: Personalizado
 dependencies:
   - drupal:block

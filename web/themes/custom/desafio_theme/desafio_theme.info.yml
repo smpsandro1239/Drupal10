@@ -1,4 +1,4 @@
-name: Desafio Theme
+name: 'Tema Desafio'
 type: theme
 description: 'Tema personalizado para o Desafio Web Developer, baseado no Bootstrap 5.'
 core_version_requirement: ^10
@@ -55,3 +55,5 @@ libraries-override:
 
 # Image for theme selection page
 # screenshot: desafio_theme.png # You would need to create this image.
+
+favicon: favicon.ico

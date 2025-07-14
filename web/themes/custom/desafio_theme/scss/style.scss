@@ -197,17 +197,51 @@ ul.tabs--primary {
 }
 
 // Candidatura Form
-// Ensure your form has this class or target Drupal's default form classes
-.candidatura-form {
+// Class `.candidatura-form` is from previous SASS,
+// `.candidatura-form-detailed` is added via hook_form_alter in .theme file
+.candidatura-form, .candidatura-form-detailed {
+  background-color: $white; // Give form a background if body is not white
+  // padding: map-get($spacers, 4); // Optional padding for the whole form
+  // border: $border-width solid $border-color; // Optional border
+  // border-radius: $border-radius-lg;
+  // box-shadow: $box-shadow-sm;
+  // margin-bottom: map-get($spacers, 5);
+
+
+  // Styling for visual sections created with divs in hook_form_alter
+  .form-section {
+    padding: map-get($spacers, 3);
+    margin-bottom: map-get($spacers, 4);
+    border: $border-width solid $border-color;
+    border-radius: $border-radius;
+    background-color: lighten($light-gray, 2%); // Slightly off-white background for sections
+
+    &--personal-info {
+      // border-left: 4px solid $primary; // Example: Accent border for a section
+    }
+    &--address-info {
+      // border-left: 4px solid $accent;
+    }
+    // Add more specific styling per section if needed
+    h3.form-section-title { // If you were to add titles to sections via markup
+      font-size: $h5-font-size;
+      color: $primary;
+      margin-bottom: map-get($spacers, 3);
+      padding-bottom: map-get($spacers, 2);
+      border-bottom: $border-width solid $border-color;
+    }
+  }
+
+
   // General form item styling
   .form-item {
-    margin-bottom: map-get($spacers, 3);
+    margin-bottom: $form-group-margin-bottom; // Use variable
 
     label {
       display: block;
-      font-weight: 600; // Slightly bolder labels
-      margin-bottom: map-get($spacers, 1);
-      color: $dark-gray;
+      font-weight: $label-font-weight; // Use variable
+      margin-bottom: $label-margin-bottom; // Use variable
+      color: $label-color; // Use variable
     }
   }
 
@@ -333,6 +367,32 @@ ul.tabs--primary {
        &:hover {
         background-color: darken($secondary, 10%);
         border-color: darken($secondary, 10%);
+      }
+    }
+
+    // Responsive adjustments for exposed filters
+    // This assumes the exposed form items are direct children or can be targeted this way.
+    // Drupal's default exposed form structure might require more specific selectors if using core templates without overrides.
+    @media (max-width: 767.98px) { // Targets screens smaller than Bootstrap's 'md' breakpoint.
+      display: flex;
+      flex-wrap: wrap; // Allow items to wrap
+
+      .form-item {
+        min-width: 200px; // Ensure a minimum width for usability
+        flex-grow: 1; // Allow items to grow
+        margin-right: map-get($spacers, 2); // Add some space between items if they are side-by-side before wrapping
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      .form-actions {
+        width: 100%; // Make actions (submit button) take full width on small screens
+        margin-top: map-get($spacers, 2); // Add space above actions when they wrap
+        .form-submit {
+          width: 100%; // Make submit button full width
+        }
       }
     }
   }

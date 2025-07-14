@@ -14,7 +14,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
  * @Block(
  *  id = "greeting_block",
  *  admin_label = @Translation("Saudação Dinâmica"),
- *  category = @Translation("Custom")
+ *  category = @Translation("Personalizado")
  * )
  */
 class GreetingBlock extends BlockBase implements ContainerFactoryPluginInterface {
